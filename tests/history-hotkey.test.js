@@ -1,0 +1,20 @@
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const mod = { exports: {} };
+vm.runInNewContext(fs.readFileSync(require.resolve('../src/kanban-adapter'), 'utf8'), { module: mod, require: name => name === 'obsidian' ? { Notice: class {} } : ['./kanban-form', './board-panel'].includes(name) ? {} : require('../src/' + name.slice(2)) });
+test('Ctrl+Z and Cmd+Shift+Z reach board history even when checkbox is focused, while text input keeps native undo', () => {
+    let handler, calls = [];
+    const doc = { addEventListener(type, fn) { handler = fn; }, removeEventListener() {} };
+    const view = {}, manager = {};
+    const adapter = new mod.exports.KanbanAdapter({ openModals: new Set(), app: { workspace: { activeLeaf: { view } } } });
+    adapter.panels.set(view, { view, root: { ownerDocument: doc, contains: () => true }, current: () => manager });
+    adapter.history.apply = (target, redo) => { calls.push(redo); assert.equal(target, manager); };
+    adapter.listenHistory(doc);
+    let stopped = 0;
+    const event = { key: 'z', ctrlKey: true, shiftKey: false, target: { closest: selector => selector.includes('not([type="checkbox"])') ? null : {} }, preventDefault() { stopped++; }, stopImmediatePropagation() {} };
+    handler(event); assert.equal(stopped, 1); assert.equal(calls[0], false);
+    handler({ ...event, ctrlKey: false, metaKey: true, shiftKey: true }); assert.equal(calls[1], true);
+    handler({ ...event, target: { closest: () => ({}) } }); assert.equal(calls.length, 2);
+});

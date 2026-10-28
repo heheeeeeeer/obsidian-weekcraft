@@ -1,0 +1,11 @@
+node_modules/
+/main.js
+dist/
+coverage/
+.DS_Store
+Thumbs.db
+.env
+.env.*
+.obsidian/
+data.json
+*.log

@@ -1,0 +1,834 @@
+.weekly-kanban-enhanced .kanban-plugin__board {
+    width: 100%;
+    max-width: calc(var(--wk-lane-width, 680px) + 32px);
+    margin-inline: auto;
+}
+.weekly-kanban-enhanced .kanban-plugin__lane-wrapper {
+    max-width: 100% !important;
+    width: var(--wk-lane-width, 680px) !important;
+    box-sizing: border-box;
+}
+.weekly-kanban-enhanced .kanban-plugin__lane-items { max-height: none; }
+.weekly-kanban-enhanced .weekly-kanban-completed {
+    display: block;
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-top: 6px;
+    text-decoration: none;
+}
+.weekly-kanban-task-modal { width: min(480px, calc(100vw - 40px)); }
+.weekly-kanban-task-modal .wk-form-row { display: flex; gap: 16px; margin-bottom: 16px; }
+.weekly-kanban-task-modal .wk-form-row input { flex: 1; min-width: 0; }
+.weekly-kanban-task-modal input[type="text"], .weekly-kanban-task-modal select {
+    height: 34px;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--background-modifier-border);
+    border-radius: 0;
+    box-shadow: none;
+}
+.weekly-kanban-task-modal textarea { width: 100%; min-height: 112px; resize: vertical; background: transparent; }
+.weekly-kanban-task-modal .wk-form-hint { color: var(--text-muted); font-size: 12px; margin-top: 8px; }
+.weekly-kanban-task-modal .wk-form-error { color: var(--text-error); font-size: 12px; margin-top: 8px; }
+.weekly-kanban-task-modal .wk-form-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+
+.daily-schedule { padding: 4px 0; }
+.daily-schedule .daily-schedule-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.daily-schedule input[type="text"],
+.daily-schedule textarea {
+    height: 32px;
+    padding: 4px 2px;
+    border: 0;
+    border-bottom: 1px solid var(--background-modifier-border);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    color: var(--text-normal);
+    font-size: var(--font-text-size);
+}
+.daily-schedule input[type="text"]:focus,
+.daily-schedule textarea:focus {
+    border-bottom-color: var(--interactive-accent);
+    box-shadow: none;
+}
+.daily-schedule input::placeholder,
+.daily-schedule textarea::placeholder { color: var(--text-faint); }
+.daily-schedule .daily-schedule-time {
+    width: 128px;
+    flex: 0 0 128px;
+    font-variant-numeric: tabular-nums;
+}
+.daily-schedule .daily-schedule-day {
+    height: 32px;
+    width: 72px;
+    padding: 4px 6px;
+    border: 0;
+    border-bottom: 1px solid var(--background-modifier-border);
+    border-radius: 0;
+    background-color: transparent;
+    box-shadow: none;
+    color: var(--text-normal);
+    font-size: var(--font-text-size);
+    cursor: pointer;
+}
+.daily-schedule .daily-schedule-day:focus { border-bottom-color: var(--interactive-accent); }
+.daily-schedule .daily-schedule-day option { background: var(--background-primary); color: var(--text-normal); }
+.daily-schedule .daily-schedule-title {
+    flex: 1;
+    min-width: 120px;
+    height: 34px;
+    min-height: 34px;
+    max-height: 160px;
+    resize: none;
+    line-height: 24px;
+    box-sizing: border-box;
+    overflow-y: hidden;
+}
+.daily-schedule .daily-schedule-categories {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+}
+.daily-schedule .daily-schedule-category-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-width: 88px;
+    max-width: 160px;
+    padding: 4px 6px;
+    border: 0;
+    border-bottom: 1px solid var(--background-modifier-border);
+    border-radius: 0;
+    background: transparent;
+    color: var(--text-normal);
+    box-shadow: none;
+}
+.daily-schedule .daily-schedule-category-trigger:hover { background: transparent; }
+.daily-schedule .daily-schedule-category-trigger:focus,
+.daily-schedule .daily-schedule-category-trigger[aria-expanded="true"] {
+    border-bottom-color: var(--interactive-accent);
+    color: var(--text-normal);
+}
+.daily-schedule .daily-schedule-category-caret {
+    color: var(--text-faint);
+    font-size: 11px;
+}
+.daily-schedule-category-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    min-width: 116px;
+    max-width: 148px;
+    padding: 4px;
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 8px;
+    background: var(--background-primary);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+}
+.daily-schedule-category-menu input[type="text"] {
+    height: 26px;
+    padding: 2px 4px;
+    border: 0;
+    border-bottom: 1px solid var(--background-modifier-border);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    color: var(--text-normal);
+    font-size: var(--font-text-size);
+}
+.daily-schedule-category-menu input[type="text"]:focus {
+    border-bottom-color: var(--interactive-accent);
+    box-shadow: none;
+}
+.daily-schedule-category-menu button {
+    height: 26px;
+    padding: 2px 6px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    box-shadow: none;
+    color: var(--text-muted);
+    font-size: var(--font-text-size);
+    cursor: pointer;
+}
+.daily-schedule-category-menu button:hover {
+    background: var(--background-modifier-hover);
+    color: var(--text-normal);
+}
+.daily-schedule-category-menu button[aria-pressed="true"] {
+    background: transparent;
+    color: var(--text-accent);
+    box-shadow: inset 0 -2px 0 var(--interactive-accent);
+}
+.daily-schedule-category-menu button:focus-visible {
+    outline: 2px solid var(--interactive-accent);
+    outline-offset: 2px;
+}
+.daily-schedule-category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    max-height: 180px;
+    overflow-y: auto;
+}
+.daily-schedule-category-item {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+.daily-schedule-category-item.is-selected {
+    background: var(--background-modifier-hover);
+    border-radius: 6px;
+}
+.daily-schedule-category-option {
+    flex: 1;
+    min-width: 0;
+    padding: 2px 8px;
+    color: var(--text-normal);
+    text-align: left;
+}
+.daily-schedule-category-option:hover,
+.daily-schedule-category-item.is-selected .daily-schedule-category-option {
+    background: transparent;
+}
+.daily-schedule-category-delete,
+.daily-schedule-category-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    min-width: 22px;
+    padding: 0;
+    color: var(--text-faint);
+}
+.daily-schedule-category-delete:hover,
+.daily-schedule-category-icon:hover {
+    color: var(--text-normal);
+}
+.daily-schedule-category-composer {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-top: 2px;
+}
+.daily-schedule-category-spacer {
+    flex: 1;
+    min-width: 0;
+}
+.daily-schedule-category-input-row {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 4px;
+}
+.daily-schedule-category-composer > .daily-schedule-category-icon {
+    flex: 0 0 22px;
+}
+.daily-schedule-category-menu .daily-schedule-custom {
+    width: 70px;
+    min-width: 0;
+    flex: 1;
+}
+.daily-schedule-category-menu [hidden] { display: none !important; }
+.daily-schedule [hidden] { display: none !important; }
+.daily-schedule button {
+    height: 30px;
+    padding: 4px 8px;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    box-shadow: none;
+    color: var(--text-muted);
+    font-size: var(--font-text-size);
+    cursor: pointer;
+}
+.daily-schedule button:hover { background: var(--background-modifier-hover); color: var(--text-normal); }
+.daily-schedule button[aria-pressed="true"] {
+    background: transparent;
+    color: var(--text-accent);
+    box-shadow: inset 0 -2px 0 var(--interactive-accent);
+}
+.daily-schedule button:focus-visible { outline: 2px solid var(--interactive-accent); outline-offset: 2px; }
+.daily-schedule .daily-schedule-add { color: var(--text-accent); }
+.daily-schedule button:disabled { opacity: .45; cursor: default; }
+.daily-schedule .daily-schedule-feedback { color: var(--text-muted); font-size: var(--font-smallest); }
+.daily-schedule .daily-schedule-feedback:not(:empty) { margin-top: 6px; }
+
+/* WeekCraft owns the enhanced board layout; the original Markdown data stays in Kanban. */
+.weekcraft-grouped-view .kanban-plugin__board { display: none !important; }
+.weekcraft-grouped-view .view-content { overflow-y: auto; }
+.weekcraft-board { width: min(100%, calc(var(--wk-lane-width, 680px) + 32px)); margin: 0 auto; padding: 12px 8px 28px; box-sizing: border-box; }
+.weekcraft-lane { margin: 0 0 16px; border: 1px solid var(--background-modifier-border); border-radius: 10px; overflow: hidden; background: var(--background-primary); }
+.weekcraft-lane-header { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 8px 14px; background: var(--background-secondary); }
+.weekcraft-lane-header h3 { flex: 1; min-width: 0; margin: 0; font-size: 1.05em; }
+.weekcraft-count { color: var(--text-muted); font-size: .85em; }
+.weekcraft-board button { background: transparent; border: 0; box-shadow: none; color: var(--text-muted); padding: 2px; cursor: pointer; }
+.weekcraft-board button:hover { background: var(--background-modifier-hover); color: var(--text-normal); }
+.weekcraft-board button:focus-visible { outline: 2px solid var(--interactive-accent); outline-offset: 2px; }
+.weekcraft-board .weekcraft-add { width: 24px; height: 24px; font-size: 20px; line-height: 1; color: var(--text-normal); flex: 0 0 24px; border-radius: 6px; }
+.weekcraft-lane-toggle { width: 22px; height: 28px; font-size: 22px; }
+.weekcraft-lane-body { padding: 12px 14px; }
+.weekcraft-lane-body[hidden] { display: none; }
+.weekcraft-group { border-radius: 8px; background: var(--background-primary-alt); padding: 12px 14px; }
+.weekcraft-group + .weekcraft-group { margin-top: 12px; }
+.weekcraft-group-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.weekcraft-time { font-weight: 650; font-variant-numeric: tabular-nums; line-height: 1.5; }
+.weekcraft-tag { margin-left: auto; color: var(--text-muted); font-size: .85em; border-radius: 12px; padding: 2px 9px; background: var(--background-secondary); white-space: nowrap; }
+.weekcraft-task { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; position: relative; min-width: 0; }
+.weekcraft-task + .weekcraft-task { border-top: 1px solid var(--background-modifier-border); }
+.weekcraft-task-text { flex: 1; min-width: 0; line-height: 1.6; overflow-wrap: anywhere; }
+.weekcraft-task-label p { margin: 0; }
+.weekcraft-task-label > :first-child { margin-top: 0; }
+.weekcraft-task-label > :last-child { margin-bottom: 0; }
+.weekcraft-task.is-complete .weekcraft-task-label { color: var(--text-muted); text-decoration: line-through; }
+.weekcraft-board input.weekcraft-checkbox { margin: .3em 0 0; flex: 0 0 auto; width: 16px; height: 16px; cursor: pointer; }
+.weekcraft-board .weekcraft-edit { flex: 0 0 24px; font-size: 20px; line-height: 1.2; }
+.weekcraft-board .weekcraft-grip { flex: 0 0 18px; font-size: 18px; line-height: 1.5; cursor: grab; touch-action: none; opacity: .5; }
+.weekcraft-grip:active { cursor: grabbing; }
+.weekcraft-completed { display: block; margin-top: 4px; color: var(--text-muted); font-size: .8em; text-decoration: none; }
+.weekcraft-empty { color: var(--text-faint); font-size: .85em; padding: 2px 0; }
+.weekcraft-board .is-drop-target { outline: 2px solid var(--interactive-accent); outline-offset: -2px; background: var(--background-modifier-hover); }
+.weekcraft-task.is-dragging { opacity: .35; }
+@media (max-width: 600px) {
+ .weekcraft-board { padding-inline: 0; }
+ .weekcraft-lane-body { padding: 8px; }
+ .weekcraft-group { padding: 10px; }
+ .weekcraft-tag { white-space: normal; max-width: 50%; text-align: right; }
+}
+/* Keep the native toolbar/search area, without reserving the old board's full height. */
+.weekcraft-grouped-view .view-content > .kanban-plugin { height: auto !important; min-height: 0 !important; contain: none; flex: 0 0 auto; }
+.weekly-kanban-task-modal textarea { height: 112px !important; min-height: 112px; max-height: 220px; }
+
+/* Compact task composer and controls. */
+.weekly-kanban-task-modal textarea { height: 56px !important; min-height: 56px; max-height: 160px; }
+.weekly-kanban-task-modal .modal-content { min-height: 0; }
+.weekcraft-task-label, .weekcraft-task-label > p { display: inline; }
+.weekcraft-completed { display: inline-block; margin: 0 0 0 8px; white-space: nowrap; font-size: .8em; color: var(--text-muted); vertical-align: baseline; }
+.weekcraft-board .weekcraft-tag { --weekcraft-tag-color: #4975c8; color: var(--weekcraft-tag-color); background: color-mix(in srgb, var(--weekcraft-tag-color) 14%, transparent); border-radius: 12px; padding: 2px 9px; font-size: .85em; cursor: pointer; flex: 0 0 auto; }
+.weekcraft-board .weekcraft-tag:hover { color: var(--weekcraft-tag-color); background: color-mix(in srgb, var(--weekcraft-tag-color) 24%, transparent); }
+.weekcraft-lane-menu { flex: 0 0 24px; font-size: 20px; }
+.weekcraft-show-hidden { margin-bottom: 10px; font-size: .85em; }
+@media (max-width: 600px) {
+ .weekcraft-task { gap: 6px; }
+ .weekcraft-completed { font-size: .72em; }
+ .weekcraft-board .weekcraft-task .weekcraft-tag { max-width: 28%; white-space: normal; }
+}
+.weekly-kanban-task-modal textarea { min-height: 56px !important; }
+
+/* A shared control height keeps the date header on one center line. */
+.weekcraft-board .weekcraft-lane-header { align-items: center; }
+.weekcraft-board .weekcraft-lane-header h3 { display: flex; align-items: center; min-height: 28px; line-height: 28px; margin: 0; padding: 0; }
+.weekcraft-board .weekcraft-lane-header .weekcraft-count { display: inline-flex; align-items: center; justify-content: center; height: 28px; line-height: 1; margin: 0; padding: 0; }
+.weekcraft-board .weekcraft-lane-header button { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 28px; width: 28px; height: 28px; min-height: 0; line-height: 1; margin: 0; padding: 0; }
+.weekcraft-board .weekcraft-lane-header button svg { display: block; width: 18px; height: 18px; margin: 0; }
+.weekcraft-board .weekcraft-lane-header .weekcraft-lane-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    flex: 0 0 auto;
+}
+.weekcraft-board .weekcraft-lane-header .weekcraft-add {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    border-radius: 4px;
+}
+.weekcraft-board .weekcraft-lane-header .weekcraft-add svg { width: 16px; height: 16px; }
+.weekcraft-board .weekcraft-lane-header .weekcraft-lane-more {
+    width: 20px;
+    height: 24px;
+    flex: 0 0 20px;
+    border-radius: 4px;
+    color: var(--text-faint);
+}
+.weekcraft-board .weekcraft-lane-header .weekcraft-lane-more svg { width: 16px; height: 16px; }
+.weekcraft-board .weekcraft-lane-header .weekcraft-lane-more:hover {
+    color: var(--text-normal);
+    background: var(--background-modifier-hover);
+}
+.weekcraft-board button.weekcraft-time { padding: 0; margin: 0; height: auto; min-height: 0; font: inherit; font-weight: 650; line-height: 1.5; color: var(--text-normal); cursor: text; text-align: left; background: transparent; }
+.weekcraft-task-label { cursor: text; }
+.weekcraft-task-label[hidden] { display: none; }
+.weekcraft-task-label:focus-visible { outline: 1px solid var(--interactive-accent); outline-offset: 3px; border-radius: 3px; }
+.weekcraft-inline-time, .weekcraft-inline-task { border: 1px solid var(--interactive-accent); border-radius: 5px; background: var(--background-primary); color: var(--text-normal); font: inherit; box-sizing: border-box; }
+.weekcraft-inline-time { width: 190px; max-width: 60%; height: 30px; padding: 3px 6px; font-variant-numeric: tabular-nums; }
+.weekcraft-inline-task { display: block; width: 100%; min-height: 0; max-height: none; padding: 0; line-height: 1.6; resize: none; overflow: hidden; }
+
+.weekcraft-board button.weekcraft-completed { display: inline-block; height: auto; min-height: 0; margin: 0 0 0 8px; padding: 0; color: var(--text-muted); background: transparent; font-size: .8em; font-weight: normal; line-height: inherit; vertical-align: baseline; cursor: text; }
+.weekcraft-board button.weekcraft-completed:hover { color: var(--text-normal); background: transparent; }
+.weekcraft-inline-completed { display: inline-block; max-width: 100%; height: 26px; margin-left: 8px; padding: 2px 5px; border: 1px solid var(--interactive-accent); border-radius: 4px; background: var(--background-primary); color: var(--text-muted); font-size: .8em; font-variant-numeric: tabular-nums; vertical-align: baseline; }
+
+.weekcraft-transfer-busy { pointer-events: none; cursor: progress; }
+.weekcraft-transfer-busy .weekcraft-task { opacity: .65; }
+
+/* Shared settings cards, scoped to WeekCraft. */
+.weekcraft-settings { max-width: 820px; margin: 0 auto; padding: 4px 0 24px; }
+.weekcraft-settings-section + .weekcraft-settings-section { margin-top: 28px; }
+.weekcraft-settings-section > h3 { margin: 0 0 12px; padding: 0 4px; font-size: var(--font-ui-medium); font-weight: 600; color: var(--text-normal); }
+.weekcraft-settings-card { padding: 4px 20px; border-radius: 16px; background: var(--weekcraft-settings-background, color-mix(in srgb, var(--text-normal) 9%, var(--background-primary))); }
+.weekcraft-settings-card .setting-item { margin: 0; padding: 18px 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.weekcraft-settings-card > .setting-item + .setting-item, .weekcraft-settings-colors { border-top: 1px solid var(--background-modifier-border); }
+.weekcraft-settings .setting-item-name { font-weight: 500; }
+.weekcraft-settings .setting-item-description { margin-top: 5px; line-height: 1.5; color: var(--text-muted); }
+.weekcraft-settings textarea { min-height: 100px; width: 210px; resize: vertical; }
+.weekcraft-settings-colors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+.weekcraft-settings-colors .setting-item { padding: 12px 0; }
+.weekcraft-settings-colors .setting-item-control { gap: 8px; }
+@media (max-width: 600px) {
+ .weekcraft-settings-card { padding-inline: 14px; }
+ .weekcraft-settings-colors { grid-template-columns: 1fr; }
+ .weekcraft-settings-card > .setting-item { flex-wrap: wrap; gap: 12px; }
+ .weekcraft-settings textarea { width: 100%; }
+}
+
+/* Quiet calendar layout: one surface per day, lightweight groups inside. */
+.weekcraft-board .weekcraft-lane {
+    border-color: color-mix(in srgb, var(--background-modifier-border) 65%, transparent);
+    border-radius: 14px;
+    margin-bottom: 20px;
+    background: var(--background-primary);
+}
+.weekcraft-board .weekcraft-lane-header {
+    background: transparent;
+    padding: 12px 18px;
+    gap: 12px;
+}
+.weekcraft-board .weekcraft-lane-header h3 {
+    color: var(--text-normal);
+    font-weight: 650;
+    font-size: 1.12em;
+}
+.weekcraft-board .weekcraft-count { color: var(--text-faint); }
+.weekcraft-board .weekcraft-lane-body { padding: 0 18px 14px; }
+.weekcraft-board .weekcraft-group {
+    position: relative;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    padding: 14px 0;
+}
+.weekcraft-board .weekcraft-group + .weekcraft-group {
+    margin-top: 4px;
+    border-top: 1px solid color-mix(in srgb, var(--background-modifier-border) 55%, transparent);
+}
+.weekcraft-board .weekcraft-group.is-scheduled { padding-left: 18px; }
+.weekcraft-board .weekcraft-group.is-scheduled::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 16px;
+    bottom: 16px;
+    width: 3px;
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--weekcraft-group-color, var(--text-muted)) 55%, var(--background-primary));
+    pointer-events: none;
+}
+.weekcraft-board .weekcraft-group-header { margin-bottom: 6px; }
+.weekcraft-board .weekcraft-task { padding: 10px 0; }
+.weekcraft-board .weekcraft-task + .weekcraft-task {
+    border-top-color: color-mix(in srgb, var(--background-modifier-border) 55%, transparent);
+}
+.weekcraft-board .weekcraft-tag {
+    background: color-mix(in srgb, var(--weekcraft-tag-color) 9%, transparent);
+    font-weight: 400;
+}
+.weekcraft-board .weekcraft-grip { opacity: .35; }
+.weekcraft-board .weekcraft-edit { color: var(--text-faint); }
+.weekcraft-board .weekcraft-task:hover .weekcraft-grip { opacity: .65; }
+.weekcraft-board .weekcraft-group.is-drop-target {
+    background: color-mix(in srgb, var(--interactive-accent) 5%, var(--background-primary));
+}
+@media (max-width: 600px) {
+    .weekcraft-board .weekcraft-lane-header { padding: 10px 12px; }
+    .weekcraft-board .weekcraft-lane-body { padding: 0 12px 10px; }
+    .weekcraft-board .weekcraft-group.is-scheduled { padding-left: 12px; }
+}
+
+/* Compact rows and an add action for each shared time group. */
+.weekcraft-board .weekcraft-task { padding: 6px 0; gap: 8px; }
+.weekcraft-board .weekcraft-group { padding-top: 10px; padding-bottom: 10px; }
+.weekcraft-board .weekcraft-group-header { margin-bottom: 3px; }
+.weekcraft-board .weekcraft-group.is-scheduled::before { top: 12px; bottom: 12px; }
+.weekcraft-board .weekcraft-task .weekcraft-tag { margin-top: 2px; }
+.weekcraft-board .weekcraft-task .weekcraft-tag.is-uncategorized { color: var(--text-faint); background: transparent; }
+
+/* Soft, clearly separated fields in the schedule dialog. */
+.modal.weekly-kanban-task-modal { width: min(560px, calc(100vw - 32px)); padding: 28px; border-radius: 20px; background: var(--background-primary); }
+.weekly-kanban-task-modal .modal-title { margin-bottom: 24px; font-size: 1.5em; font-weight: 650; color: var(--text-normal); }
+.weekly-kanban-task-modal .modal-content { margin-top: 0; }
+.weekly-kanban-task-modal .wk-form-row { gap: 14px; margin-bottom: 16px; }
+.weekly-kanban-task-modal .wk-input-box, .weekly-kanban-task-modal .wk-task-box {
+    display: flex; align-items: center; gap: 10px;
+    background: color-mix(in srgb, var(--text-normal) 3%, var(--background-primary));
+    border: 1px solid color-mix(in srgb, var(--background-modifier-border) 65%, transparent);
+    border-radius: 12px; padding: 8px 12px;
+}
+.weekly-kanban-task-modal .wk-input-box { flex: 1; min-width: 0; }
+.weekly-kanban-task-modal .wk-field-icon { display: flex; flex: 0 0 18px; color: var(--text-muted); }
+.weekly-kanban-task-modal .wk-field-icon svg { width: 18px; height: 18px; }
+.weekly-kanban-task-modal .wk-input-box input[type="text"], .weekly-kanban-task-modal .wk-input-box select {
+    width: 100%; min-width: 0; height: 32px; padding: 0; border: 0; border-radius: 0; background-color: transparent; box-shadow: none; font: inherit;
+}
+.weekly-kanban-task-modal .wk-task-box { align-items: flex-start; padding: 14px 12px; }
+.weekly-kanban-task-modal .wk-task-box .wk-field-icon { margin-top: 3px; }
+.weekly-kanban-task-modal .wk-task-box textarea { flex: 1; width: 100%; min-width: 0; min-height: 116px !important; padding: 0; border: 0; background: transparent; box-shadow: none; font: inherit; line-height: 1.6; resize: vertical; }
+.weekly-kanban-task-modal .wk-input-box:focus-within, .weekly-kanban-task-modal .wk-task-box:focus-within { border-color: var(--interactive-accent); }
+.weekly-kanban-task-modal .wk-form-hint { margin-top: 12px; line-height: 1.5; }
+.weekly-kanban-task-modal .wk-form-error:empty { display: none; }
+.weekly-kanban-task-modal .wk-form-actions { margin-top: 20px; gap: 12px; }
+.weekly-kanban-task-modal .wk-form-actions button { min-width: 80px; height: 42px; padding: 0 20px; border: 0; border-radius: 11px; box-shadow: none; font-weight: 500; }
+.weekly-kanban-task-modal .wk-form-actions button:not(.mod-cta) { background: color-mix(in srgb, var(--text-normal) 5%, var(--background-primary)); }
+.weekly-kanban-task-modal .wk-form-actions .mod-cta { background: var(--interactive-accent); color: var(--text-on-accent); }
+@media (max-width: 480px) {
+    .modal.weekly-kanban-task-modal { padding: 20px; }
+    .weekly-kanban-task-modal .wk-form-row { flex-direction: column; }
+    .weekly-kanban-task-modal .wk-input-box { flex: auto; }
+}
+
+/* Invisible category target keeps uncategorized tasks editable. */
+.weekcraft-board .weekcraft-task .weekcraft-tag.is-uncategorized {
+    width: 28px; min-width: 28px; min-height: 24px; padding: 0;
+    background: transparent; border: 0; box-shadow: none;
+}
+.weekcraft-board .weekcraft-task .weekcraft-tag.is-uncategorized:hover { background: transparent; }
+.weekly-kanban-task-modal .modal-title { padding-left: 0; margin-left: 0; text-align: left; }
+.weekly-kanban-task-modal .modal-header { padding-left: 0; margin-left: 0; }
+
+/* Give category labels breathing room and center them beside multiline tasks. */
+.weekcraft-board .weekcraft-task > .weekcraft-tag {
+    align-self: center;
+    margin-top: 0;
+    margin-left: 8px;
+}
+@media (max-width: 600px) {
+    .weekcraft-board .weekcraft-task > .weekcraft-tag { margin-left: 5px; }
+}
+
+/* Reserve a consistent category column so task widths do not depend on tags. */
+.weekcraft-board .weekcraft-task {
+    display: grid;
+    grid-template-columns: 18px 16px minmax(0, 1fr) 76px 24px;
+    column-gap: 10px;
+    align-items: start;
+}
+.weekcraft-board .weekcraft-task-text { width: 100%; min-width: 0; }
+.weekcraft-board .weekcraft-task > .weekcraft-tag {
+    grid-column: 4;
+    align-self: center;
+    justify-self: end;
+    margin: 0 8px 0 0;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+}
+.weekcraft-board .weekcraft-task > .weekcraft-tag.is-uncategorized {
+    width: 26px; min-width: 26px; height: 24px; padding: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 17px; line-height: 1;
+    color: var(--text-faint);
+    background: color-mix(in srgb, var(--text-normal) 5%, var(--background-primary));
+    border-radius: 8px;
+}
+.weekcraft-board .weekcraft-task > .weekcraft-tag.is-uncategorized:hover {
+    color: var(--text-muted);
+    background: color-mix(in srgb, var(--text-normal) 8%, var(--background-primary));
+}
+@media (max-width: 600px) {
+    .weekcraft-board .weekcraft-task { grid-template-columns: 16px 16px minmax(0, 1fr) 68px 20px; column-gap: 7px; }
+    .weekcraft-board .weekcraft-task > .weekcraft-tag { margin: 0 6px 0 0; max-width: 100%; }
+}
+
+/* All task controls share the same vertical center, with compact delete buttons. */
+.weekcraft-board .weekcraft-task {
+    grid-template-columns: 18px 16px minmax(0, 1fr) 68px 20px;
+    align-items: center;
+}
+.weekcraft-board .weekcraft-task > .weekcraft-grip,
+.weekcraft-board .weekcraft-task > .weekcraft-task-delete {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 100%; height: 24px; min-height: 0;
+    margin: 0; padding: 0; line-height: 1; border-radius: 4px;
+}
+.weekcraft-board .weekcraft-task > .weekcraft-grip svg { display: block; width: 16px; height: 16px; }
+.weekcraft-board .weekcraft-task > input.weekcraft-checkbox { margin: 0; align-self: center; }
+.weekcraft-board .weekcraft-task-delete { color: var(--text-faint); }
+.weekcraft-board .weekcraft-task-delete {
+    font-size: 18px;
+    line-height: 1;
+}
+.weekcraft-board .weekcraft-task-delete:hover { color: var(--text-error); background: color-mix(in srgb, var(--text-error) 7%, transparent); }
+@media (max-width: 600px) {
+    .weekcraft-board .weekcraft-task { grid-template-columns: 16px 16px minmax(0, 1fr) 64px 20px; }
+}
+
+.weekcraft-board .weekcraft-task > .weekcraft-task-more {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 100%; height: 24px; min-height: 0; margin: 0; padding: 0;
+    line-height: 1; border-radius: 4px; color: var(--text-faint);
+}
+.weekcraft-board .weekcraft-task-more svg { display: block; width: 16px; height: 16px; }
+.weekcraft-board .weekcraft-task-more:hover { color: var(--text-normal); background: var(--background-modifier-hover); }
+
+.menu-item.weekcraft-menu-danger .menu-item-icon,
+.menu-item.weekcraft-menu-danger .menu-item-title {
+    color: var(--text-error);
+}
+.menu-item.weekcraft-menu-danger:hover .menu-item-icon,
+.menu-item.weekcraft-menu-danger:hover .menu-item-title {
+    color: var(--text-error);
+}
+.menu-item.weekcraft-menu-danger:hover {
+    background: color-mix(in srgb, var(--text-error) 8%, transparent);
+}
+
+/* Timeline-based schedule editor for daily task creation. */
+.modal.weekly-kanban-task-modal {
+    width: min(820px, calc(100vw - 32px));
+    max-width: min(820px, calc(100vw - 32px));
+}
+.weekly-kanban-task-modal .wk-form-layout {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+}
+.weekly-kanban-task-modal .wk-form-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+}
+.weekly-kanban-task-modal .wk-form-panel > .wk-input-box,
+.weekly-kanban-task-modal .wk-form-panel > .wk-task-box {
+    margin: 0;
+}
+.weekly-kanban-task-modal .wk-time-panel {
+    border: 1px solid color-mix(in srgb, var(--background-modifier-border) 70%, transparent);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--text-normal) 2%, var(--background-primary));
+    overflow: hidden;
+}
+.weekly-kanban-task-modal .wk-time-scroll {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+.weekly-kanban-task-modal .wk-time-grid {
+    position: relative;
+    height: var(--wk-day-height, 1344px);
+    min-height: var(--wk-day-height, 1344px);
+    padding: 0; border: 0;
+    user-select: none;
+    cursor: crosshair;
+}
+.weekly-kanban-task-modal .wk-time-row {
+    position: absolute;
+    inset-inline: 0;
+    height: 0;
+}
+.weekly-kanban-task-modal .wk-time-label {
+    position: absolute;
+    left: 14px;
+    top: -10px;
+    width: 52px;
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 20px;
+    font-variant-numeric: tabular-nums;
+}
+.weekly-kanban-task-modal .wk-time-line {
+    position: absolute;
+    left: 74px;
+    right: 14px;
+    top: 0;
+    border-top: 1px dashed color-mix(in srgb, var(--background-modifier-border) 90%, transparent);
+}
+.weekly-kanban-task-modal .wk-time-now {
+    position: absolute;
+    left: 74px;
+    right: 14px;
+    height: 0;
+    border-top: 1px solid color-mix(in srgb, var(--color-red) 72%, transparent);
+    pointer-events: none;
+    opacity: .7;
+}
+.weekly-kanban-task-modal .wk-time-selection {
+    position: absolute;
+    left: 74px;
+    right: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 6px 12px;
+    border: 1px solid color-mix(in srgb, var(--interactive-accent) 62%, white);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--interactive-accent) 10%, var(--background-primary));
+    box-sizing: border-box;
+    cursor: grab;
+    overflow: visible;
+}
+.weekly-kanban-task-modal .wk-time-selection:active { cursor: grabbing; }
+.weekly-kanban-task-modal .wk-time-selection[hidden] { display: none; }
+.weekly-kanban-task-modal .wk-time-selection.is-overnight {
+    border-style: dashed;
+}
+.weekly-kanban-task-modal .wk-time-selection.is-selected {
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--interactive-accent) 28%, transparent);
+}
+.weekly-kanban-task-modal .wk-time-summary {
+    margin: auto 0;
+    text-align: center;
+    color: var(--text-normal);
+    pointer-events: none;
+    min-width: 0;
+}
+.weekly-kanban-task-modal .wk-time-range {
+    font-size: 18px;
+    font-weight: 650;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+    word-break: break-word;
+}
+.weekly-kanban-task-modal .wk-time-duration {
+    margin-top: 4px;
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.2;
+}
+.weekly-kanban-task-modal .wk-time-handle {
+    position: absolute;
+    left: 50%;
+    z-index: 2;
+    box-sizing: border-box;
+    width: 24px;
+    height: 16px;
+    margin: 0;
+    border-radius: 999px;
+    background: var(--background-primary);
+    border: 1px solid color-mix(in srgb, var(--background-modifier-border) 85%, transparent);
+    color: var(--interactive-accent);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 14px;
+    text-align: center;
+    cursor: ns-resize;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
+}
+.weekly-kanban-task-modal .wk-time-input-box input[type="text"] {
+    font-variant-numeric: tabular-nums;
+}
+.weekly-kanban-task-modal .wk-form-error:empty {
+    display: none;
+}
+@media (max-width: 720px) {
+    .modal.weekly-kanban-task-modal {
+        width: min(620px, calc(100vw - 20px));
+        max-width: min(620px, calc(100vw - 20px));
+        padding: 20px;
+    }
+    .weekly-kanban-task-modal .wk-form-layout {
+        grid-template-columns: 1fr;
+    }
+    .weekly-kanban-task-modal .wk-time-panel {
+        order: 2;
+    }
+    .weekly-kanban-task-modal .wk-form-panel {
+        order: 1;
+    }
+}
+
+/* Handle centers sit on the centers of the one-pixel border lines. */
+.weekly-kanban-task-modal .wk-time-handle.is-start { top: -0.5px; transform: translate(-50%, -50%); }
+.weekly-kanban-task-modal .wk-time-handle.is-end { bottom: -0.5px; transform: translate(-50%, 50%); }
+.weekly-kanban-task-modal .wk-time-summary { max-height: 100%; min-height: 0; overflow: hidden; }
+
+/* Completion color stays muted; strike-through is an independent preference. */
+.weekcraft-board.weekcraft-no-strikethrough .weekcraft-task.is-complete .weekcraft-task-label,
+.weekcraft-board.weekcraft-no-strikethrough .weekcraft-task.is-complete .weekcraft-task-label * {
+    text-decoration: none !important;
+}
+
+/* Precise drop boundary; remove the old full-card drop outline. */
+.weekcraft-board .is-drop-target { outline: none; background: transparent; }
+.weekcraft-board .weekcraft-task, .weekcraft-board .weekcraft-lane-body, .weekcraft-board .weekcraft-lane-header { position: relative; }
+.weekcraft-board .weekcraft-drop-before::after, .weekcraft-board .weekcraft-drop-after::after {
+    content: ''; position: absolute; left: 0; right: 0; height: 2px;
+    background: var(--interactive-accent); border-radius: 2px; pointer-events: none; z-index: 5;
+}
+.weekcraft-board .weekcraft-drop-before::after { top: -1px; }
+.weekcraft-board .weekcraft-drop-after::after { bottom: -1px; }
+.weekcraft-board .weekcraft-row-number { display: none; }
+.weekcraft-board.weekcraft-show-numbers .weekcraft-grip > svg { display: none; }
+.weekcraft-board.weekcraft-show-numbers .weekcraft-row-number { display: inline; color: var(--text-faint); font-size: 10px; font-variant-numeric: tabular-nums; }
+.weekcraft-board.weekcraft-show-numbers .weekcraft-grip:hover > svg { display: block; }
+.weekcraft-board.weekcraft-show-numbers .weekcraft-grip:hover .weekcraft-row-number { display: none; }
+.weekcraft-board .weekcraft-lane-header h3 { flex: 0 0 auto; }
+.weekcraft-board .weekcraft-lane-header .weekcraft-day-theme { flex: 1 1 auto; width: auto; min-width: 0; height: auto; margin-right: auto; padding: 2px 6px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .85em; font-weight: normal; color: var(--text-muted); }
+.weekcraft-board .weekcraft-lane-header .weekcraft-day-theme[hidden] { display: none; }
+.weekcraft-board .weekcraft-lane-header .weekcraft-theme-input { flex: 1; width: 120px; min-width: 0; height: 28px; }
+.weekcraft-copy-time { margin-top: 12px; }
+.weekcraft-context-menu .menu-item-icon { display: flex !important; visibility: visible !important; }
+
+/* Category list management, scoped independently from the other settings cards. */
+.weekcraft-settings .weekcraft-category-panel { padding: 0; background: transparent; }
+.weekcraft-category-card { padding: 18px 16px; border: 1px solid var(--background-modifier-border); border-radius: 15px; background: var(--background-primary); }
+.weekcraft-category-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.weekcraft-category-heading h4 { margin: 0; color: var(--text-normal); font-size: var(--font-ui-medium); font-weight: 600; }
+.weekcraft-category-muted, .weekcraft-category-hint { color: var(--text-muted); font-size: var(--font-ui-smaller); line-height: 1.5; }
+.weekcraft-category-add { display: flex; align-items: stretch; gap: 8px; }
+.weekcraft-category-add input { flex: 1; min-width: 0; height: 42px; padding: 8px 12px; border: 1px solid var(--background-modifier-border); border-radius: 9px; background: var(--background-primary); box-shadow: none; }
+.weekcraft-category-add button { height: 42px; padding: 0 14px; border-radius: 9px; box-shadow: none; white-space: nowrap; }
+.weekcraft-category-hint { margin-top: 10px; }
+.weekcraft-category-error { margin-top: 8px; color: var(--text-error); font-size: var(--font-ui-smaller); }
+.weekcraft-category-error:empty { display: none; }
+.weekcraft-category-list { display: flex; flex-direction: column; gap: 12px; border-top: 1px solid var(--background-modifier-border); margin-top: 18px; padding-top: 20px; }
+.weekcraft-category-row { position: relative; display: flex; align-items: center; gap: 8px; min-height: 62px; padding: 10px 12px; border: 1px solid color-mix(in srgb, var(--background-modifier-border) 65%, transparent); border-radius: 10px; background: color-mix(in srgb, var(--text-normal) 2%, var(--background-primary)); }
+.weekcraft-category-grip { display: flex; align-items: center; justify-content: center; width: 14px; min-width: 14px; padding: 0; background: transparent; border: 0; box-shadow: none; color: var(--text-faint); cursor: grab; touch-action: none; }
+.weekcraft-category-grip svg { width: 14px; height: 18px; }
+.weekcraft-category-dot { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 10px; }
+.weekcraft-category-name { flex: 1; min-width: 0; overflow-wrap: anywhere; color: var(--text-normal); }
+.weekcraft-category-actions { display: flex; align-items: center; gap: 8px; }
+.weekcraft-category-color, .weekcraft-category-icon { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 5px; height: 32px; border: 1px solid var(--background-modifier-border); border-radius: 8px; background: var(--background-primary); box-shadow: none; color: var(--text-muted); cursor: pointer; }
+.weekcraft-category-color { padding: 0 8px; font-size: var(--font-ui-smaller); }
+.weekcraft-category-color span { display: inline-flex; }
+.weekcraft-category-icon { width: 32px; padding: 0; }
+.weekcraft-category-color svg, .weekcraft-category-icon svg, .weekcraft-category-note svg { width: 15px; height: 15px; }
+.weekcraft-category-color input[type="color"] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.weekcraft-category-color:focus-within { outline: 2px solid var(--interactive-accent); outline-offset: 2px; }
+.weekcraft-category-icon:hover, .weekcraft-category-color:hover { background: var(--background-modifier-hover); }
+.weekcraft-category-icon.is-delete:hover { color: var(--text-error); }
+.weekcraft-category-note { display: flex; align-items: center; gap: 5px; margin-top: 16px; }
+.weekcraft-category-note span { display: inline-flex; }
+.weekcraft-category-sort { display: flex; align-items: center; gap: 12px; margin-top: 28px; padding: 10px 14px; border: 1px solid var(--background-modifier-border); border-radius: 15px; background: var(--background-primary); }
+.weekcraft-category-sort-icon { display: flex; align-items: center; justify-content: center; flex: 0 0 38px; height: 38px; color: var(--interactive-accent); background: color-mix(in srgb, var(--interactive-accent) 10%, transparent); border-radius: 10px; }
+.weekcraft-category-sort-icon svg { width: 18px; height: 18px; }
+.weekcraft-settings .weekcraft-category-sort .setting-item { flex: 1; min-width: 0; padding: 5px 0; }
+.weekcraft-category-row.is-dragging { opacity: .45; }
+.weekcraft-category-row.is-insert-before::after, .weekcraft-category-row.is-insert-after::after { content: ''; position: absolute; left: 0; right: 0; height: 2px; background: var(--interactive-accent); }
+.weekcraft-category-row.is-insert-before::after { top: -7px; }
+.weekcraft-category-row.is-insert-after::after { bottom: -7px; }
+@media (max-width: 480px) { .weekcraft-category-card { padding: 14px 10px; } .weekcraft-category-row { padding-inline: 8px; gap: 6px; } .weekcraft-category-actions { gap: 5px; } }
+
+/* Keep category management compact and consistent with native gray settings cards. */
+.weekcraft-settings .weekcraft-category-card,
+.weekcraft-settings .weekcraft-category-sort {
+    background: var(--weekcraft-settings-background, color-mix(in srgb, var(--text-normal) 9%, var(--background-primary)));
+}
+.weekcraft-settings .weekcraft-category-list { gap: 6px; padding-top: 12px; margin-top: 12px; }
+.weekcraft-settings .weekcraft-category-row { min-height: 44px; padding: 6px 10px; background: transparent; }
+.weekcraft-settings .weekcraft-category-color,
+.weekcraft-settings .weekcraft-category-icon { width: 30px; height: 30px; padding: 0; box-sizing: border-box; }
+.weekcraft-settings .weekcraft-category-sort { margin-top: 18px; }
+.weekcraft-settings .weekcraft-category-row.is-insert-before::after { top: -4px; }
+.weekcraft-settings .weekcraft-category-row.is-insert-after::after { bottom: -4px; }

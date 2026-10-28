@@ -1,0 +1,10 @@
+{
+  "id": "weekcraft",
+  "name": "WeekCraft",
+  "version": "0.6.1",
+  "minAppVersion": "1.6.0",
+  "description": "Plan your week with grouped schedule tasks, shared entry forms, and automatic completion timestamps.",
+  "author": "heheeeeeeer",
+  "authorUrl": "https://github.com/heheeeeeeer",
+  "isDesktopOnly": false
+}
